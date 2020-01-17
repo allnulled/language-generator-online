@@ -277,7 +277,6 @@ export default {
 		///////////////////////////////////////////////////////////
 		// Project actions:
 		createNewProject() {
-			window.LanguageGenerator = this;
 			const projectName = window.prompt("Name of the new project:");
 			if(this.checkProjectName(projectName)) {
 				this.info.projects.push({name: projectName, files: []});
@@ -432,6 +431,7 @@ export default {
 			this.storeInfo();
 		},
 
+		///////////////////////////////////////////////////////////
 		// Editor logical actions:
 		generateParser() {
 			if(typeof this.info.navigation.selected.project === "undefined") {
