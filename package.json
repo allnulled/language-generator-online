@@ -1,11 +1,12 @@
 {
-  "name": "generador-de-lenguajes-peg",
+  "name": "language-generator-online",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "upload-ghp": "node dev/upload-to-ghpages.js"
   },
   "dependencies": {
     "core-js": "^3.4.4",
@@ -20,6 +21,9 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "execute-command-sync": "^1.0.2",
+    "fs-extra": "^8.1.0",
+    "rimraf": "^3.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
