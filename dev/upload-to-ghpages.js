@@ -1,5 +1,5 @@
 const SETTINGS = {
-	gitRepositoryURL: "https://github.com/allnulled/language-generator-online.git",
+	gitRepositoryURL: require(__dirname + "/../package.json").repository.url.replace(/^git\+/g,""),
 	temporaryFolder: __dirname + "/../temporary",
 	distributionFolder: __dirname + "/../dist",
 	projectFolder: __dirname + "/.."
