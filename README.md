@@ -33,4 +33,4 @@ The goal of this application is to let anyone to:
 - **with project scalability in mind**: despite your language is made by 1 piece of code, you can split it by any number of parts, for you to easily organize yourself.
 - **as a true environment**: the application remembers its own state thanks to `localStorage`. This means that, if you use the application from a device, that device will remember how was the application left the next time you get into it again. This way, you can stop and retake your development at the same point it was left, which simulates a true environment, with "files" that are saved automatically.
 
-Soon, a *tester* tab will be introduced, in order to be able to test your own programming languages from this application too.
+Soon, a *[TESTER]* tab will be introduced, in order to be able to test your own programming languages from this application too.
