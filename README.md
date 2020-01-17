@@ -34,3 +34,7 @@ The goal of this application is to let anyone to:
 - **as a true environment**: the application remembers its own state thanks to `localStorage`. This means that, if you use the application from a device, that device will remember how was the application left the next time you get into it again. This way, you can stop and retake your development at the same point it was left, which simulates a true environment, with "files" that are saved automatically.
 
 Soon, a *[TESTER]* tab will be introduced, in order to be able to test your own programming languages from this application too.
+
+## Report bugs
+
+If you find a bug, it would be a beautiful detail if you add a [new issue](https://github.com/allnulled/language-generator-online/issues/new). Do not worry too much about formalisms, you can simply put what you have found. Thank you.
