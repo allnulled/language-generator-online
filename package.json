@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.4.4",
+    "jszip": "^3.2.2",
+    "pegjs": "^0.10.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
