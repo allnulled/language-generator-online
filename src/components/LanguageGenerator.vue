@@ -303,25 +303,29 @@ export default {
 			const projectName = window.prompt("Name of the new project:");
 			if(this.checkProjectName(projectName)) {
 				this.info.projects.push({name: projectName, files: []});
-				return this.storeInfo();
+				this.$forceUpdate();
+				this.storeInfo();
 			}
 		},
 		selectProject(projectIndex) {
 			this.info.navigation.selected.project = projectIndex;
 			this.info.navigation.selected.file = undefined;
 			this.navigation.selected.option = "editor";
+			this.$forceUpdate();
 			this.storeInfo();
 		},
 		renameProject(projectIndex) {
 			const projectName = window.prompt(`New name for project <${this.info.projects[projectIndex].name}>:`);
 			if(this.checkProjectName(projectName)) {
 				this.info.projects[projectIndex].name = projectName;
+				this.$forceUpdate();
 				this.storeInfo();
 			}
 		},
 		deleteProject(projectIndex) {
 			if(confirm(`Are you sure to remove project <${this.info.projects[projectIndex].name}>?`)) {
 				this.info.projects.splice(projectIndex, 1);
+				this.$forceUpdate();
 				this.storeInfo();
 			}
 		},
@@ -350,6 +354,7 @@ export default {
 			const projectIndex = this.info.navigation.selected.project;
 			if(this.checkFileName(fileName, projectIndex)) {
 				this.info.projects[projectIndex].files.push({ name: fileName, contents: "" });
+				this.$forceUpdate();
 				this.storeInfo();
 			}
 		},
@@ -364,6 +369,7 @@ export default {
 			const fileName = window.prompt(`New name for file <${this.info.projects[projectIndex].files[fileIndex].name}> of project <${this.info.projects[projectIndex].name}>:`);
 			if(this.checkFileName(fileName, projectIndex)) {
 				this.info.projects[projectIndex].files[fileIndex].name = fileName;
+				this.$forceUpdate();
 				this.storeInfo();
 			}
 		},
@@ -388,6 +394,7 @@ export default {
 			} else if(this.info.navigation.selected.file === (fileIndex - 1)) {
 				this.info.navigation.selected.file += 1;
 			}
+			this.$forceUpdate();
 			this.storeInfo();
 		},
 		moveFileDown() {
@@ -402,6 +409,7 @@ export default {
 			} else if(this.info.navigation.selected.file === (fileIndex + 1)) {
 				this.info.navigation.selected.file -= 1;
 			}
+			this.$forceUpdate();
 			this.storeInfo();
 		},
 		checkFileName(fileName, projectIndex) {
@@ -439,14 +447,17 @@ export default {
 		},
 		toggleEditorSidebar() {
 			this.info.navigation.selected.editorSidebar = !this.info.navigation.selected.editorSidebar;
+			this.$forceUpdate();
 			this.storeInfo();
 		},
 		increaseFont() {
 			this.info.settings.fontSize++;
+			this.$forceUpdate();
 			this.storeInfo();
 		},
 		decreaseFont() {
 			this.info.settings.fontSize--;
+			this.$forceUpdate();
 			this.storeInfo();
 		},
 		setFooterError(error) {
