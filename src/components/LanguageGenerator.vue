@@ -6,7 +6,7 @@
 		<div class="Topbar">
 			<ul class="Navigation">
 				<li class="NavigationItem"
-					:class="{selected: optionIndex === info.navigation.selected.option}"
+					:class="{selected: optionIndex === navigation.selected.option}"
 					v-for="(option, optionIndex) in navigation.options"
 					v-bind:key="optionIndex">
 					<button class="NavigationButton NormalButton styling-1"
@@ -17,7 +17,7 @@
 		</div>
 
 		<!-- MAIN:PROJECT -->
-		<div class="Main Project" v-if="info.navigation.selected.option === 'project'">
+		<div class="Main Project" v-if="navigation.selected.option === 'project'">
 			<div class="Label styling-1 FirstLabel">Select a project:</div>
 			<table class="Table w100">
 				<tr class="Row" v-for="(project, projectIndex) in info.projects" v-bind:key="projectIndex">
@@ -38,10 +38,10 @@
 		</div>
 		
 		<!-- MAIN:EDITOR -->
-		<div class="Main Editor" v-else-if="info.navigation.selected.option === 'editor' && typeof info.navigation.selected.project === 'undefined'">
+		<div class="Main Editor" v-else-if="navigation.selected.option === 'editor' && typeof info.navigation.selected.project === 'undefined'">
 			<div class="styling-1">You need to select a project first.</div>
 		</div>
-		<div class="Main Editor" v-else-if="info.navigation.selected.option === 'editor'" :key="info.navigation.selected.file">
+		<div class="Main Editor" v-else-if="navigation.selected.option === 'editor'" :key="info.navigation.selected.file">
 
 			<!-- MAIN:EDITOR:TOPBAR -->
 			<div class="EditorTopbar">
@@ -52,12 +52,12 @@
 						</td>
 						<td class="Cell w100 styling-2">
 							<span v-if="(typeof info.navigation.selected.project !== 'undefined') && (typeof info.navigation.selected.file !== 'undefined')">
-								<b class="styling-1"> {{ info.projects[info.navigation.selected.project].files[info.navigation.selected.file].name }} </b>
+								<b class="styling-1 FilenameRefTitle"> {{ info.projects[info.navigation.selected.project].files[info.navigation.selected.file].name }} </b>
 							</span>
 							<span v-else>
 								(none)
 							</span>
-							<span v-if="typeof info.navigation.selected.project !== 'undefined'">[<b class="underlined styling-1">{{ info.projects[info.navigation.selected.project].name }}</b>]</span>
+							<span v-if="typeof info.navigation.selected.project !== 'undefined'">[<b class="underlined styling-1 ProjectNameRef">{{ info.projects[info.navigation.selected.project].name }}</b>]</span>
 						</td>
 					</tr>
 				</table>
@@ -82,7 +82,7 @@
 												<td class="w50">
 													<button class="NormalButton styling-1 w100" v-on:click="moveFileUp" v-if="typeof info.navigation.selected.file !== 'undefined'">Up</button>
 												</td>
-												<td style="min-width:2px"></td>
+												<td class="min-width-2"></td>
 												<td class="w50">
 													<button class="NormalButton styling-1 w100" v-on:click="moveFileDown" v-if="typeof info.navigation.selected.file !== 'undefined'">Down</button>
 												</td>
@@ -95,7 +95,7 @@
 												<td class="w50">
 													<button class="NormalButton styling-1 w100 whitespace-nowrap" v-on:click="decreaseFont">Font-</button>
 												</td>
-												<td style="min-width:2px"></td>
+												<td class="min-width-2"></td>
 												<td class="w50">
 													<button class="NormalButton styling-1 w100 whitespace-nowrap" v-on:click="increaseFont">Font+</button>
 												</td>
@@ -116,7 +116,7 @@
 		</div>
 
 		<!-- MAIN:OPTIONS -->
-		<div class="Main Options" v-else-if="info.navigation.selected.option === 'options'">
+		<div class="Main Options" v-else-if="navigation.selected.option === 'options'">
 			<div class="Label styling-1 FirstLabel">Options:</div>
 			<fieldset>
 				<legend>
@@ -125,12 +125,6 @@
 				<div>
 					<button class="NormalButton styling-1" type="button" v-on:click="generateParser">Generate parser</button>
 				</div>
-				<!--div>
-					<button class="NormalButton styling-1" type="button">Generate editor</button>
-				</div>
-				<div>
-					<button class="NormalButton styling-1" type="button">Generate all project</button>
-				</div-->
 			</fieldset>
 			<br/>
 			<fieldset>
@@ -144,18 +138,18 @@
 		</div>
 		
 		<!-- MAIN:HELP -->
-		<div class="Main Help" v-else-if="info.navigation.selected.option === 'help'">
+		<div class="Main Help" v-else-if="navigation.selected.option === 'help'">
 			<div class="Label styling-1 FirstLabel" v-on:click="debugMe">Help:</div>
 			<div class="styling-2">
 				<div>This editor is designed for you to create programming languages easily.</div>
 				<br/>
-			<div class="Label styling-1 FirstLabel underlined">The idea:</div>
+				<div class="Label styling-1 FirstLabel underlined">The idea:</div>
 				<div>The idea is quite simple: you can split the source code of your own programming language in as many files as you need.</div>
 				<div>This way, you can scale the volume of code that your language requires effortlessly.</div>
 				<div>Also, this application can be used as a whole environment that can remember the state of the editor anytime (this feature relies on <b>localStorage</b>).</div>
 				<div>Another advantage is that you can work from a mobile phone: the app is responsive, and fully compatible with mobile devices.</div>
 				<br/>
-			<div class="Label styling-1 FirstLabel underlined">To sum up:</div>
+				<div class="Label styling-1 FirstLabel underlined">To sum up:</div>
 				<div>Briefly explained, these are the reasons and advantages that me, as the author, was looking for with this application:</div>
 				<ul class="DocumentationList">
 					<li>
@@ -163,13 +157,13 @@
 						<ul class="DocumentationList DocumentationList2">
 							<li>- with just a mobile phone</li>
 							<li>- through many different files</li>
-							<li>- with the possibility to test the grammars (feature not yet included)</li>
+							<li>- with the possibility to test the grammars and see the output</li>
 							<li>- with custom parser generators (right now, only <a href="https://pegjs.org">PEGjs</a> is available, but it would be easy to change the framework by another)</li>
 							<li>- with custom language generators (right now, there is only one generator)</li>
 						</ul>
 					</li>
 				</ul>
-			<div class="Label styling-1 FirstLabel underlined">External resources:</div>
+				<div class="Label styling-1 FirstLabel underlined">External resources:</div>
 				<div>These external websites can be helpful documentation references:</div>
 				<br/>
 				<ul class="DocumentationList">
@@ -182,7 +176,7 @@
 						</ul>
 					</li>
 					<li>
-						<div><b>Codemirror</b>: (not yet related, but soon)</div>
+						<div><b>Codemirror</b>: (not yet related, but hopefully soon)</div>
 						<ul class="DocumentationList DocumentationList2">
 							<li>- <a href="https://codemirror.net/doc/manual.html">Documentation</a>.</li>
 							<li>- <a href="https://github.com/codemirror/CodeMirror">Source code</a>.</li>
@@ -190,7 +184,7 @@
 						</ul>
 					</li>
 				</ul>
-			<div class="Label styling-1 FirstLabel underlined">License:</div>
+				<div class="Label styling-1 FirstLabel underlined">License:</div>
 				<div>The license of this project is just <a href="http://www.wtfpl.net/">WTFPL</a> by default.</div>
 				<div>On the other hand, it is tied to other project licenses, like:</div>
 				<ul class="DocumentationList DocumentationList2">
@@ -202,12 +196,28 @@
 				<br/>
 			</div>
 		</div>
+		
+		<!-- MAIN:TESTER -->
+		<div class="Main Tester" v-else-if="navigation.selected.option === 'tester'">
+			<div class="Label FirstLabel styling-1">Testing language: <b>{{ info.projects[info.navigation.selected.project].name }}</b></div>
+			<div class="Label FirstLabel styling-1">Input:</div>
+			<textarea class="EditorTextarea w100" v-model="info.tester.input" :style="{fontSize: info.settings.fontSize + 'px'}" @input="generateTesterOutput"></textarea>
+			<div v-if="info.tester.error">
+				<div class="Label FirstLabel styling-1">Error:</div>
+				<div class="ErrorBox TesterErrorBox">
+					<span class="ErrorCloser TesterErrorCloser styling-1" v-on:click="clearTesterError">Okay</span>
+					<pre class="ErrorMessage TesterErrorMessage styling-3">{{ info.tester.error }}</pre>
+				</div>
+			</div>
+			<div class="Label FirstLabel styling-1">Output:</div>
+			<textarea class="EditorTextarea w100" v-model="info.tester.output" :style="{fontSize: info.settings.fontSize + 'px'}" @input="storeInfo"></textarea>
+		</div>
 
 		<!-- FOOTER -->
 		<div class="Footer">
-			<div class="ErrorBox styling-2" v-if="info.navigation.footer.error" :key="info.navigation.footer.error">
-				<span class="ErrorMessage">{{ info.navigation.footer.error }}</span>
+			<div class="ErrorBox styling-3" v-if="info.navigation.footer.error" :key="info.navigation.footer.error">
 				<span class="ErrorCloser styling-1" v-on:click="clearFooterError">Okay</span>
+				<pre class="ErrorMessage">{{ info.navigation.footer.error }}</pre>
 			</div>
 		</div>
 
@@ -218,10 +228,11 @@
 
 import JSZip from "jszip";
 import pegjs from "pegjs";
-import moveArray from "@/assets/scripts/move-array.js";
+import moveArrayIndex from "@/assets/scripts/move-array-index.js";
 import downloadFile from "@/assets/scripts/download-file.js";
 
 const STORAGE_ID = "LANGUAGE_GENERATOR_STORAGE";
+const TESTER_TIMEOUT = 1000;
 
 export default {
 	name: "LanguageGenerator",
@@ -229,17 +240,24 @@ export default {
 	data() {
 		return {
 			navigation: {
+				selected: {
+					option: "project",
+				},
 				options: {
 					project: "Project",
 					editor: "Editor",
+					tester: "Tester",
 					options: "Options",
 					help: "Help",
 				}
 			},
+			volatile: {
+				testerInputTimeoutId: undefined,
+				parser: undefined
+			},
 			info: {
 				navigation: {
 					selected: {
-						option: "project",
 						project: undefined,
 						file: undefined,
 						editorSidebar: false
@@ -251,6 +269,11 @@ export default {
 				projects: [],
 				settings: {
 					fontSize: 10
+				},
+				tester: {
+					input: "",
+					error: "",
+					output: ""
 				}
 			}
 		};
@@ -286,7 +309,7 @@ export default {
 		selectProject(projectIndex) {
 			this.info.navigation.selected.project = projectIndex;
 			this.info.navigation.selected.file = undefined;
-			this.info.navigation.selected.option = "editor";
+			this.navigation.selected.option = "editor";
 			this.storeInfo();
 		},
 		renameProject(projectIndex) {
@@ -359,7 +382,7 @@ export default {
 			if(fileIndex === 0) {
 				return;
 			}
-			moveArray(this.info.projects[projectIndex].files, fileIndex, fileIndex - 1);
+			moveArrayIndex(this.info.projects[projectIndex].files, fileIndex, fileIndex - 1);
 			if(this.info.navigation.selected.file === fileIndex) {
 				this.info.navigation.selected.file -= 1;
 			} else if(this.info.navigation.selected.file === (fileIndex - 1)) {
@@ -373,7 +396,7 @@ export default {
 			if(fileIndex === (this.info.projects[projectIndex].files.length-1)) {
 				return;
 			}
-			moveArray(this.info.projects[projectIndex].files, fileIndex, fileIndex + 1);
+			moveArrayIndex(this.info.projects[projectIndex].files, fileIndex, fileIndex + 1);
 			if(this.info.navigation.selected.file === fileIndex) {
 				this.info.navigation.selected.file += 1;
 			} else if(this.info.navigation.selected.file === (fileIndex + 1)) {
@@ -402,11 +425,17 @@ export default {
 		///////////////////////////////////////////////////////////
 		// Editor UI actions:
 		setNavigationSelectedOption(optionIndex) {
-			if(optionIndex === "editor" && typeof this.info.navigation.selected.project === 'undefined') {
+			if((["editor", "tester"].indexOf(optionIndex) !== -1) && typeof this.info.navigation.selected.project === 'undefined') {
 				return alert("You have to select a project first.");
+			} else if(optionIndex === "tester") {
+				const parser = this.generateVolatileParser();
+				if(typeof parser !== "object") {
+					return;
+				}
+				this.volatile.parser = parser;
+				this.info.navigation.footer.error = undefined;
 			}
-			this.info.navigation.selected.option = optionIndex;
-			this.storeInfo();
+			this.navigation.selected.option = optionIndex;
 		},
 		toggleEditorSidebar() {
 			this.info.navigation.selected.editorSidebar = !this.info.navigation.selected.editorSidebar;
@@ -430,6 +459,34 @@ export default {
 			this.$forceUpdate();
 			this.storeInfo();
 		},
+		setTesterError(error) {
+			this.info.tester.error = error;
+			this.$forceUpdate();
+			this.storeInfo();
+		},
+		clearTesterError() {
+			this.info.tester.error = undefined;
+			this.$forceUpdate();
+			this.storeInfo();
+		},
+		handleFooterError(error, previousMessage) {
+			console.log(error);
+			if(error.message) {
+				this.setFooterError(`${previousMessage}:\n${error.message}\nLocation: ${error.location.start.line}:${error.location.start.column} - ${error.location.end.line}:${error.location.end.column}`);
+			} else {
+				this.setFooterError(`${previousMessage}:\n${JSON.stringify(error)}`);
+			}
+			return false;
+		},
+		handleTesterError(error, previousMessage) {
+			console.log(error);
+			if(error.message) {
+				this.setTesterError(`${previousMessage}:\n${error.message}\nLocation: ${error.location.start.line}:${error.location.start.column} - ${error.location.end.line}:${error.location.end.column}`);
+			} else {
+				this.setTesterError(`${previousMessage}:\n${JSON.stringify(error)}`);
+			}
+			return false;
+		},
 
 		///////////////////////////////////////////////////////////
 		// Editor logical actions:
@@ -438,7 +495,6 @@ export default {
 				return alert("You have to select a project first.");
 			}
 			const parserSource = this.info.projects[this.info.navigation.selected.project].files.map(file => file.contents).join("\n");
-			console.log("Generated parser:", parserSource);
 			try {
 				const parserGenerated = pegjs.generate(parserSource, {
 					format: "umd",
@@ -446,17 +502,66 @@ export default {
 				});
 				downloadFile(this.info.projects[this.info.navigation.selected.project].name + ".pegjs", parserGenerated);
 			} catch(error) {
-				if(error.message) {
-					this.setFooterError(error.message);
-				} else {
-					this.setFooterError(JSON.stringify(error));
-				}
+				return this.handleFooterError(error, "Error generating parser");
 			}
+		},
+		generateVolatileParser() {
+			if(typeof this.info.navigation.selected.project === "undefined") {
+				return alert("You have to select a project first.");
+			}
+			const parserSource = this.info.projects[this.info.navigation.selected.project].files.map(file => file.contents).join("\n");
+			try {
+				return pegjs.generate(parserSource);
+			} catch(error) {
+				return this.handleFooterError(error, "Error generating parser");
+			}
+		},
+		generateTesterOutput() {
+			const timeoutId = this.volatile.testerInputTimeoutId;
+			clearTimeout(timeoutId);
+			this.volatile.testerInputTimeoutId = setTimeout(() => {
+			const codeIn = this.info.tester.input;
+				try {
+					const codeOut = this.volatile.parser.parse(codeIn);
+					if(typeof this.info.tester.output !== "string") {
+						this.info.tester.output = JSON.stringify(codeOut, null, 2);
+					} else {
+						this.info.tester.output = codeOut;
+					}
+					this.clearTesterError();
+				} catch(error) {
+					return this.handleTesterError(error, "Error generating output");
+				}
+				this.$forceUpdate();
+				this.storeInfo();
+			}, TESTER_TIMEOUT);
 		},
 		generateProject() {
 			const zip = new JSZip();
-			console.log(typeof zip); // to avoid vue linter unused-variable rule.
+			console.log(typeof zip);
+			// 
 			// @TODO...
+			// 
+			// 1. [package.json]     A minimalistic package.json file with the dependencies
+			// 2. [${mylang}.js]     Generate the
+			// 3. [${mylang}.bin.js] Generate binary file that can:
+			// 
+			// <mylang> 
+			//   --file <file to evaluate> | --code <inline code to evaluate>
+			//   --output <file to dump data>
+			//   --repl
+			//   --option-<option name> <option value>
+			//   --options-file <json file to get the options>
+			//   --parameter-<parameter name> <parameter value>
+			//   --parameters-file <json file to get the parameters>
+			//   --parser <file of the parser, by default ${mylang}.node.js>
+			// 
+			// + description of each option
+			// + help
+			// 
+			// 4. 
+			// 5. 
+			// 6. 
 		},
 	}
 };
@@ -568,6 +673,7 @@ table {
 	max-width: 100px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	text-transform: none;
 	cursor: pointer;
 }
 .LanguageGenerator .FilenameRef:hover {
@@ -588,7 +694,12 @@ table {
 .LanguageGenerator .FilenameRef {
 	padding-left: 4px;
 }
-
+.LanguageGenerator .FilenameRefTitle {
+	text-transform: none;
+}
+.LanguageGenerator .ProjectNameRef {
+	text-transform: none;
+}
 .LanguageGenerator .FirstLabel {
 	padding: 4px;
     padding-left: 0;
@@ -599,7 +710,11 @@ table {
 	color: white;
 	padding: 4px;
 }
-.LanguageGenerator .ErrorBox .ErrorMessage {}
+.LanguageGenerator .ErrorBox .ErrorMessage {
+	display: inline;
+	white-space: pre-wrap;
+	font-size: 10px;
+}
 .LanguageGenerator .ErrorBox .ErrorCloser {
 	border: 1px solid white;
 	float: right;
@@ -628,6 +743,9 @@ table {
 .styling-2 {
 	font-size: 10px;
 }
+.styling-3 {
+	font-size: 12px;
+}
 .whitespace-nowrap {
 	white-space: nowrap;
 }
@@ -639,6 +757,9 @@ table {
 }
 .w50 {
 	width: 50%;
+}
+.min-width-2 {
+	min-width: 2px;
 }
 .valign-top {
 	vertical-align: top;
